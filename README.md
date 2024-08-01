@@ -16,6 +16,9 @@ Low Level Memory in C#/Unity? - https://www.youtube.com/watch?v=U81B7g_vzx4
 
 Practical Optimizations - https://www.youtube.com/watch?v=NAVbI1HIzCE (also about the tradeoff maintainability between OO and DOD-based design, ignore the unity-specific stuff...
 
+## polish
+
+Jan Willem Nijman - Vlambeer - "The art of screenshake" at INDIGO Classes 2013 https://www.youtube.com/watch?v=AJdEqssNZ-U
 
 ## General Tips / Examples
 
