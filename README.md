@@ -16,6 +16,13 @@ Low Level Memory in C#/Unity? - https://www.youtube.com/watch?v=U81B7g_vzx4
 
 Practical Optimizations - https://www.youtube.com/watch?v=NAVbI1HIzCE (also about the tradeoff maintainability between OO and DOD-based design, ignore the unity-specific stuff...
 
+Stephen Toub :
+
+A Complete .NET Developer's Guide to Span with Stephen Toub https://www.youtube.com/watch?v=5KdICNWOfEQ&list=PLdo4fOcmZ0oX8eqDkSw4hH9cSehrGgdr1&index=5 
+
+"Highly Technical Talk" with Hanselman and Toub | BRK194 https://www.youtube.com/watch?v=TRFfTdzpk-M&list=PLdo4fOcmZ0oX8eqDkSw4hH9cSehrGgdr1&index=6
+
+
 ## polish
 
 Jan Willem Nijman - Vlambeer - "The art of screenshake" at INDIGO Classes 2013 https://www.youtube.com/watch?v=AJdEqssNZ-U
