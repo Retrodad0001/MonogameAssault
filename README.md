@@ -1,6 +1,8 @@
 # MonogameAssault
 
-This is a demo game for learning Monogame and combining OO and DoD design. Please give feedback so it can be used by the community.
+This is a demo game for learning Monogame and combining object-oriented design and data-oriented design. I also want to see how far I can come with maintainable automatic testing. Please give feedback so the community can use it.
+
+The game involves many units on the screen, with enough CPU-bound pressure, so parallelisation is needed. This is not a massive project, but I will assume that the game should be supported for a long time and is huge, so it should be automatically testable and have "good enough" maintainability
 
 # Resources used
 
