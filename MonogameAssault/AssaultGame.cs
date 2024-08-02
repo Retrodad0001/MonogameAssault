@@ -4,14 +4,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MonogameAssault;
 
-public class AssaultGame : Game
+public sealed class AssaultGame : Game
 {
 #pragma warning disable IDE0052 // Remove unread private members
     private readonly GraphicsDeviceManager _graphics;
 #pragma warning restore IDE0052 // Remove unread private members
 
-    private SpriteBatch _spriteBatch;
-    private Texture2D _texureAtlas;
+    internal static SpriteBatch _spriteBatch; //only one to rule them all!
+    internal static Texture2D _texureAtlas;//TODO only one to rule them all, again!, move to resource handler?
+    private SceneManager _sceneManager;
 
     public AssaultGame()
     {
@@ -28,13 +29,15 @@ public class AssaultGame : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        _texureAtlas = Content.Load<Texture2D>("TextureAtlas");
+        _sceneManager = new SceneManager(new SceneGame(), Content); //TODO : change to SceneMenu when implemented
     }
 
     protected override void Update(GameTime gameTime)
     {
         if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
+
+        _sceneManager.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -44,7 +47,7 @@ public class AssaultGame : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
-        _spriteBatch.Draw(_texureAtlas, new Vector2(0, 0), Color.White);
+        _sceneManager.Draw(gameTime);
         _spriteBatch.End();
 
         base.Draw(gameTime);
