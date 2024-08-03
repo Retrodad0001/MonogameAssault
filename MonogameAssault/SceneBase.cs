@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
+namespace MonogameAssault;
+
 internal abstract class SceneBase
 {
     internal abstract void LoadContent(ContentManager contentManager);

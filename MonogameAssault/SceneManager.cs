@@ -1,15 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
+namespace MonogameAssault;
+
 internal sealed class SceneManager
 {
     private SceneBase _currentScene;
-    private readonly ContentManager contentManager;
+    private readonly ContentManager _contentManager;
 
     internal SceneManager(SceneBase initialScene, ContentManager contentManager)
     {
         _currentScene = initialScene;
-        this.contentManager = contentManager;
+        _contentManager = contentManager;
         _currentScene.LoadContent(contentManager);
     }
 
@@ -27,6 +29,6 @@ internal sealed class SceneManager
     {
         _currentScene.UnloadContent();
         _currentScene = newScene;
-        _currentScene.LoadContent(contentManager);
+        _currentScene.LoadContent(_contentManager);
     }
 }

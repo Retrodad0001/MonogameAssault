@@ -1,10 +1,10 @@
 ﻿
 using MonogameAssault;
 
-internal sealed class Program
+internal static class Program
 {
 #pragma warning disable IDE0060 // Remove unused parameter
-    private static void Main(string[] args)
+    public static void Main(string[] args)
 #pragma warning restore IDE0060 // Remove unused parameter
     {
         using AssaultGame game = new();

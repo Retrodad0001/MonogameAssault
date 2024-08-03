@@ -5,6 +5,7 @@
     <RollForward>Major</RollForward>
     <PublishReadyToRun>false</PublishReadyToRun>
     <TieredCompilation>false</TieredCompilation>
+    <Version>0.0.1</Version>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -28,10 +29,6 @@
     <Folder Include="AI\Navigation\" />
     <Folder Include="AI\UtilityAI\" />
     <Folder Include="AssetManagement\" />
-    <Folder Include="Input\" />
-    <Folder Include="Debug\" />
-    <Folder Include="Camera2d\" />
-    <Folder Include="Animation\" />
     <Folder Include="Physics\" />
     <Folder Include="Tweening\" />
   </ItemGroup>

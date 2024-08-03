@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
+namespace MonogameAssault;
+
 internal sealed class SceneMenu : SceneBase
 {
     internal override void LoadContent(ContentManager contentManager)
