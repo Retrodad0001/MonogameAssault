@@ -29,8 +29,8 @@ internal sealed class SceneGame : SceneBase
     internal override void Draw(GameTime gameTime)
     {
         //TODO draw only visible entities based on camera (occlusion)
-        ReadOnlySpan<Vector2> positionsSpan = new(_entityManager.Positions);
-        for (int i = 0; i < EntityManager.EnemyCount; i++)
+        ReadOnlySpan<Vector2> positionsSpan = new(_entityManager.CurrentPositions);
+        for (int i = 0; i < EntityManager.ENEMY_COUNT; i++)
         {
             var position = positionsSpan[i];
 
