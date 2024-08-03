@@ -39,7 +39,7 @@ internal sealed class SceneGame : SceneBase
           "sourceSize": {"w":128,"h":16}
          */
 
-        Span<Vector2> positionsSpan = new(_entityManager.Positions);
+        ReadOnlySpan<Vector2> positionsSpan = new(_entityManager.Positions);
         for (int i = 0; i < EntityManager.EnemyCount; i++)
         {
             var position = positionsSpan[i];
