@@ -56,7 +56,7 @@ public sealed class AssaultGame : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        SpriteBatch.Begin();
+        SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
         _sceneManager.Draw(gameTime);
         SpriteBatch.End();
 
