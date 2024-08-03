@@ -6,4 +6,5 @@ namespace MonogameAssault.Components;
 internal enum Capability
 {
     CanMove = 1,
+    CanCollide = 2,
 }

@@ -12,6 +12,8 @@ internal sealed class EntityManager
     internal Capability[] capabilities;
     internal Vector2[] Positions;
 
+    //TODO add some spatial partitioning data structure and only update collidable entities in same partition
+
     public EntityManager()
     {
 
