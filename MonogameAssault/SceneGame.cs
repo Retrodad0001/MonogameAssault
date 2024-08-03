@@ -52,7 +52,7 @@ internal sealed class SceneGame : SceneBase
 
         AssaultGame.SpriteBatch.DrawString(spriteFont: AssaultGame.DebugFont
             , text: $"FPS: {AssaultGame.FrameRate}"
-            , position: _positionDebugFont, color: Color.Red);
+            , position: _positionDebugFont, color: Color.White);
     }
 
     internal override void UnloadContent()

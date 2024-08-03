@@ -78,7 +78,7 @@ csharp_style_prefer_tuple_swap = true:suggestion
 csharp_style_deconstructed_variable_declaration = true:suggestion
 csharp_style_inlined_variable_declaration = true:suggestion
 csharp_style_unused_value_expression_statement_preference = discard_variable:silent
-csharp_style_unused_value_assignment_preference = discard_variable:suggestion
+csharp_style_unused_value_assignment_preference = discard_variable:warning
 csharp_prefer_static_local_function = false:suggestion
 csharp_style_prefer_readonly_struct = true:warning
 csharp_style_prefer_readonly_struct_member = true:error
@@ -117,6 +117,9 @@ dotnet_diagnostic.IDE0090.severity = warning
 
 # IDE0051: Remove unused private members
 dotnet_diagnostic.IDE0051.severity = warning
+
+# IDE0059: Unnecessary assignment of a value
+dotnet_diagnostic.IDE0059.severity = warning
 
 [*.vb]
 #### Naming styles ####
