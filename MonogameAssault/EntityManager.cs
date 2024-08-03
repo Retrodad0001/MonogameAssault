@@ -7,7 +7,7 @@ namespace MonogameAssault;
 internal sealed class EntityManager
 {
     internal const int EnemyCount = 150000;
-    internal bool[] enabled;
+    internal EnityState[] entityStates;
     internal Capability[] capabilities;
     internal Vector2[] Positions;
 
@@ -17,7 +17,7 @@ internal sealed class EntityManager
     public EntityManager()
     {
 
-        enabled = new bool[EnemyCount];
+        entityStates = new EnityState[EnemyCount];
         capabilities = new Capability[EnemyCount];
         Positions = new Vector2[EnemyCount];
 
@@ -27,7 +27,7 @@ internal sealed class EntityManager
             int x = AssaultGame.Random.Next(0, AssaultGame.SCREEN_WIDTH);
             int y = AssaultGame.Random.Next(0, AssaultGame.SCREEN_HEIGHT);
 
-            enabled[i] = true;
+            entityStates[i] = EnityState.Active;
             capabilities[i] = Capability.CanMove;
             Positions[i] = new Vector2(x, y);
         }
@@ -35,15 +35,16 @@ internal sealed class EntityManager
 
     public void Update(GameTime gameTime)
     {
-        UpdatePositions(ref enabled, ref capabilities, ref Positions, gameTime);
+        UpdatePositions(ref entityStates, ref capabilities, ref Positions, gameTime);
     }
 
-    private static void UpdatePositions(ref bool[] enabled
+
+    private static void UpdatePositions(ref EnityState[] enityStates
         , ref Capability[] capabilities
         , ref Vector2[] positions
         , GameTime gameTime)
     {
-        ReadOnlySpan<bool> enabledSpan = new Span<bool>(enabled);
+        ReadOnlySpan<EnityState> entityStatesSpan = new Span<EnityState>(enityStates);
         ReadOnlySpan<Capability> capabilitiesSpan = new Span<Capability>(capabilities);
         Span<Vector2> positionSpan = new Span<Vector2>(positions);
 
@@ -51,7 +52,7 @@ internal sealed class EntityManager
 
         for (int i = 0; i < EnemyCount; i++)
         {
-            if (!enabledSpan[i])
+            if (entityStatesSpan[i] != EnityState.Active)
                 continue;
 
             if (capabilitiesSpan[i] != Capability.CanMove)
