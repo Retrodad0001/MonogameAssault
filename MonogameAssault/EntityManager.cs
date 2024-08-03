@@ -7,11 +7,11 @@ namespace MonogameAssault;
 internal sealed class EntityManager
 {
     internal const int EnemyCount = 150000;
-    //TODO private Animator[] animators;
     internal bool[] enabled;
     internal Capability[] capabilities;
     internal Vector2[] Positions;
 
+    //TODO add camera and matrix scaling
     //TODO add some spatial partitioning data structure and only update collidable entities in same partition
 
     public EntityManager()
@@ -31,7 +31,6 @@ internal sealed class EntityManager
             capabilities[i] = Capability.CanMove;
             Positions[i] = new Vector2(x, y);
         }
-        //TODO animators = new Animator[enemyCount];
     }
 
     public void Update(GameTime gameTime)
@@ -58,7 +57,7 @@ internal sealed class EntityManager
             if (capabilitiesSpan[i] != Capability.CanMove)
                 continue;
 
-            //50% move left, 50% move right
+            //50% move left, 50% move right for the sake of randomness
             if (AssaultGame.Random.Next(0, 2) == 0)
                 positionSpan[i].X -= 8 * gameTimeElapsed;
             else
