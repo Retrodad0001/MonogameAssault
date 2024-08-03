@@ -1,4 +1,4 @@
 ﻿namespace MonogameAssault.Camera2d;
-internal class Camera
+internal sealed class Camera
 {
 }

@@ -3,7 +3,7 @@ using System;
 
 namespace MonogameAssault;
 
-internal class EntityManager
+internal sealed class EntityManager
 {
     internal const int EnemyCount = 150000;
     //TODO private Animator[] animators;
