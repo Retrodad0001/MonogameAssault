@@ -16,6 +16,7 @@ public sealed class AssaultGame : Game
     private readonly GraphicsDeviceManager _graphics;
 
     private Matrix _scaleResolutionMatrix;
+    private Viewport _viewport;
 
     public AssaultGame()
     {
@@ -75,6 +76,7 @@ public sealed class AssaultGame : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
+        GraphicsDevice.Viewport = _viewport;
 
         SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _scaleResolutionMatrix);
         _sceneManager.Draw(gameTime);
@@ -109,6 +111,16 @@ public sealed class AssaultGame : Game
         }
 
         _scaleResolutionMatrix = Matrix.CreateScale(GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH / (float)GameStatics.Windows.DRAW_RESOLUTION_WIDTH);
+
+        _viewport = new Viewport
+        {
+            X = (int)(screenWidth / 2 - GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH / 2),
+            Y = (int)(screenHeight / 2 - GameStatics.Windows.VIRTUAL_RESLUTION_HEIGHT / 2),
+            Width = GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH,
+            Height = GameStatics.Windows.VIRTUAL_RESLUTION_HEIGHT,
+            MinDepth = 0,
+            MaxDepth = 1,//TODO resarch more about this
+        };
     }
 
 }
