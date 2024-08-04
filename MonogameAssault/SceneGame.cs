@@ -9,8 +9,13 @@ internal sealed class SceneGame : SceneBase
 {
     //TODO private Matrix _camera;
     private EntityManager _entityManager;
-    private Vector2 _positionDebugFont = new Vector2(10, 10);
     private Rectangle _sourceRectangleWasp = new Rectangle(163, 483, 125, 16);
+    private Vector2 _topPositionGameWindows = Vector2.One;
+
+
+    internal SceneGame()
+    {
+    }
 
     internal override void LoadContent(ContentManager contentManager)
     {
@@ -22,6 +27,7 @@ internal sealed class SceneGame : SceneBase
     internal override void Update(GameTime gameTime)
     {
         _entityManager.Update(gameTime);
+        _topPositionGameWindows = GameStatics.Windows.GetTopPositionScreen(ref _topPositionGameWindows);
     }
 
     internal override void Draw(GameTime gameTime)
@@ -40,7 +46,7 @@ internal sealed class SceneGame : SceneBase
 
         AssaultGame.SpriteBatch.DrawString(spriteFont: AssaultGame.DebugFont
             , text: $"FPS: {AssaultGame.FrameRate}" //TODO do with span trick
-            , position: _positionDebugFont, color: Color.White);
+            , position: _topPositionGameWindows, color: Color.Blue);
     }
 
     internal override void UnloadContent()

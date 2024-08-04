@@ -18,6 +18,8 @@ public sealed class AssaultGame : Game
     private Matrix _scaleResolutionMatrix;
     private Viewport _viewport;
 
+
+
     public AssaultGame()
     {
         _graphics = new(this);
@@ -39,6 +41,7 @@ public sealed class AssaultGame : Game
             RecalculatedResolution();
         };
 
+        GameStatics.Windows.CameraMatrix = Matrix.CreateTranslation(Vector3.Zero);
 
         RecalculatedResolution();
 
@@ -64,8 +67,27 @@ public sealed class AssaultGame : Game
     {
         FrameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+        if (Keyboard.GetState().IsKeyDown(Keys.Escape)) //TODO refactor all input stuff to input manager
             Exit();
+
+        const float CAMERA_SPEED = 1f;
+
+        if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up))
+        {
+            GameStatics.Windows.CameraMatrix *= Matrix.CreateTranslation(0, CAMERA_SPEED, 0);
+        }
+        if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down))
+        {
+            GameStatics.Windows.CameraMatrix *= Matrix.CreateTranslation(0, -CAMERA_SPEED, 0);
+        }
+        if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
+        {
+            GameStatics.Windows.CameraMatrix *= Matrix.CreateTranslation(CAMERA_SPEED, 0, 0);
+        }
+        if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
+        {
+            GameStatics.Windows.CameraMatrix *= Matrix.CreateTranslation(-CAMERA_SPEED, 0, 0);
+        }
 
         _sceneManager.Update(gameTime);
 
@@ -78,7 +100,8 @@ public sealed class AssaultGame : Game
         GraphicsDevice.Clear(Color.Black);
         GraphicsDevice.Viewport = _viewport;
 
-        SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _scaleResolutionMatrix);
+        SpriteBatch.Begin(samplerState: SamplerState.PointClamp
+            , transformMatrix: GameStatics.Windows.CameraMatrix * _scaleResolutionMatrix);
         _sceneManager.Draw(gameTime);
         SpriteBatch.End();
 
