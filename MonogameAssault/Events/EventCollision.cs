@@ -1,6 +1,12 @@
 ﻿namespace MonogameAssault.Events;
-internal ref struct EventCollision
+internal readonly ref struct EventCollision
 {
-    internal uint HitByEntity;
-    internal uint HittedEntity;
+    public readonly uint HitByEntity;
+    public readonly uint HittedEntity;
+
+    public EventCollision(uint hitByEntity, uint hittedEntity)
+    {
+        HitByEntity = hitByEntity;
+        HittedEntity = hittedEntity;
+    }
 }

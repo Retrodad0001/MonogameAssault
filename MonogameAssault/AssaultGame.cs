@@ -15,6 +15,8 @@ public sealed class AssaultGame : Game
     private SceneManager _sceneManager;
     private readonly GraphicsDeviceManager _graphics;
 
+    private Matrix _scaleResolutionMatrix;
+
     public AssaultGame()
     {
         _graphics = new(this);
@@ -24,11 +26,31 @@ public sealed class AssaultGame : Game
 
     protected override void Initialize()
     {
-        _graphics.PreferredBackBufferWidth = Constants.Windows.SCREEN_WIDTH;
-        _graphics.PreferredBackBufferHeight = Constants.Windows.SCREEN_HEIGHT;
+        _graphics.PreferredBackBufferWidth = GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH;
+        _graphics.PreferredBackBufferHeight = GameStatics.Windows.VIRTUAL_RESLUTION_HEIGHT;
         IsFixedTimeStep = false;
+        _graphics.IsFullScreen = false;
         _graphics.ApplyChanges();
+        IsMouseVisible = true;
+        Window.AllowUserResizing = true;
+        Window.ClientSizeChanged += (sender, args) =>
+        {
+            RecalculatedResolution();
+        };
+
+
+        RecalculatedResolution();
+
         base.Initialize();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        Window.ClientSizeChanged -= (sender, args) =>
+        {
+            RecalculatedResolution();
+        };
+        base.Dispose(disposing);
     }
 
     protected override void LoadContent()
@@ -49,14 +71,44 @@ public sealed class AssaultGame : Game
         base.Update(gameTime);
     }
 
+
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.Black);
 
-        SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
+        SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _scaleResolutionMatrix);
         _sceneManager.Draw(gameTime);
         SpriteBatch.End();
 
         base.Draw(gameTime);
     }
+
+    private void RecalculatedResolution()
+    {
+        /* Aristurtle Dev channel:
+         * Scale Matrix Independent Resolution Rendering in MonoGame #monogame #gamedev : 
+         * https://www.youtube.com/watch?v=BVSSQKlYipo 
+         * */
+
+        float screenWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
+        float screenHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
+
+        if (screenWidth / GameStatics.Windows.DRAW_RESOLUTION_WIDTH > screenHeight / GameStatics.Windows.DRAW_RESOLUTION_HEIGHT)
+        {
+            float aspectRatio = screenHeight / GameStatics.Windows.DRAW_RESOLUTION_HEIGHT;
+            GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH = (int)(aspectRatio * GameStatics.Windows.DRAW_RESOLUTION_WIDTH);
+            GameStatics.Windows.VIRTUAL_RESLUTION_HEIGHT = (int)(screenHeight);
+
+        }
+        else
+        {
+            float aspectRatio = screenWidth / GameStatics.Windows.DRAW_RESOLUTION_WIDTH;
+            GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH = (int)(screenWidth);
+            GameStatics.Windows.VIRTUAL_RESLUTION_HEIGHT = (int)(aspectRatio * GameStatics.Windows.DRAW_RESOLUTION_HEIGHT);
+
+        }
+
+        _scaleResolutionMatrix = Matrix.CreateScale(GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH / (float)GameStatics.Windows.DRAW_RESOLUTION_WIDTH);
+    }
+
 }

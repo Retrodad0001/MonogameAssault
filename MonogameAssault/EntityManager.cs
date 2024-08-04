@@ -22,8 +22,8 @@ internal sealed class EntityManager
 
         for (uint i = 0; i < ENEMY_COUNT; i++)
         {
-            int x = AssaultGame.Random.Next(0, Constants.Windows.SCREEN_WIDTH);
-            int y = AssaultGame.Random.Next(0, Constants.Windows.SCREEN_HEIGHT);
+            int x = AssaultGame.Random.Next(0, GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH);
+            int y = AssaultGame.Random.Next(0, GameStatics.Windows.VIRTUAL_RESLUTION_HEIGHT);
 
             entityStates[i] = EnityState.Active;
             capabilities[i] = Capability.CanMove;
