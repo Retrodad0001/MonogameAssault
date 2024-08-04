@@ -7,12 +7,10 @@ namespace MonogameAssault;
 
 internal sealed class SceneGame : SceneBase
 {
-
     //TODO private Matrix _camera;
     private EntityManager _entityManager;
     private Vector2 _positionDebugFont = new Vector2(10, 10);
     private Rectangle _sourceRectangleWasp = new Rectangle(163, 483, 125, 16);
-
 
     internal override void LoadContent(ContentManager contentManager)
     {
@@ -41,7 +39,7 @@ internal sealed class SceneGame : SceneBase
         }
 
         AssaultGame.SpriteBatch.DrawString(spriteFont: AssaultGame.DebugFont
-            , text: $"FPS: {AssaultGame.FrameRate}"
+            , text: $"FPS: {AssaultGame.FrameRate}" //TODO do with span trick
             , position: _positionDebugFont, color: Color.White);
     }
 

@@ -6,7 +6,7 @@ namespace MonogameAssault;
 
 internal sealed class EntityManager
 {
-    internal const int ENEMY_COUNT = 150000;
+    internal const uint ENEMY_COUNT = 150000;
     internal EnityState[] entityStates;
     internal Capability[] capabilities;
     internal Vector2[] CurrentPositions;
@@ -20,10 +20,10 @@ internal sealed class EntityManager
         capabilities = new Capability[ENEMY_COUNT];
         CurrentPositions = new Vector2[ENEMY_COUNT];
 
-        for (int i = 0; i < ENEMY_COUNT; i++)
+        for (uint i = 0; i < ENEMY_COUNT; i++)
         {
-            int x = AssaultGame.Random.Next(0, AssaultGame.SCREEN_WIDTH);
-            int y = AssaultGame.Random.Next(0, AssaultGame.SCREEN_HEIGHT);
+            int x = AssaultGame.Random.Next(0, Constants.Windows.SCREEN_WIDTH);
+            int y = AssaultGame.Random.Next(0, Constants.Windows.SCREEN_HEIGHT);
 
             entityStates[i] = EnityState.Active;
             capabilities[i] = Capability.CanMove;
@@ -33,19 +33,19 @@ internal sealed class EntityManager
 
     public void Update(GameTime gameTime)
     {
-        UpdatePositions(ref entityStates, ref capabilities, ref CurrentPositions, gameTime);
+        float elapsedGametime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Span<EnityState> entityStates = new Span<EnityState>(this.entityStates);
+        Span<Capability> capabilities = new Span<Capability>(this.capabilities);
+        Span<Vector2> CurrentPositions = new Span<Vector2>(this.CurrentPositions);
+
+        UpdatePositions(entityStates, capabilities, CurrentPositions, elapsedGametime);
     }
 
-    private static void UpdatePositions(ref EnityState[] enityStates
-        , ref Capability[] capabilities
-        , ref Vector2[] positions
-        , GameTime gameTime)
+    private static void UpdatePositions(ReadOnlySpan<EnityState> entityStatesSpan
+        , ReadOnlySpan<Capability> capabilitiesSpan
+        , Span<Vector2> positionSpan
+        , float elapsedGametime)
     {
-        ReadOnlySpan<EnityState> entityStatesSpan = new ReadOnlySpan<EnityState>(enityStates);
-        ReadOnlySpan<Capability> capabilitiesSpan = new ReadOnlySpan<Capability>(capabilities);
-        Span<Vector2> positionSpan = new Span<Vector2>(positions);
-        float gameTimeElapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
         for (int i = 0; i < ENEMY_COUNT; i++)
         {
             if (entityStatesSpan[i] != EnityState.Active)
@@ -56,9 +56,9 @@ internal sealed class EntityManager
 
             //50% move left, 50% move right for the sake of randomness
             if (AssaultGame.Random.Next(0, 2) == 0)
-                positionSpan[i].X -= 8 * gameTimeElapsed;
+                positionSpan[i].X -= 8 * elapsedGametime;
             else
-                positionSpan[i].X += 16 * gameTimeElapsed;
+                positionSpan[i].X += 16 * elapsedGametime;
         }
     }
 }

@@ -7,15 +7,13 @@ namespace MonogameAssault;
 
 public sealed class AssaultGame : Game
 {
-    internal const int SCREEN_WIDTH = 1920;
-    internal const int SCREEN_HEIGHT = 1080;
-    private readonly GraphicsDeviceManager _graphics;
     internal static SpriteBatch SpriteBatch; //only one to rule them all!
     internal static Texture2D TextureAtlas;//TODO only one to rule them all, again!, move to resource handler?
     internal static float FrameRate; //TODO move to better location
     internal static Random Random = new();//TODO move to better location
     internal static SpriteFont DebugFont;//TODO move to better location
     private SceneManager _sceneManager;
+    private readonly GraphicsDeviceManager _graphics;
 
     public AssaultGame()
     {
@@ -26,9 +24,8 @@ public sealed class AssaultGame : Game
 
     protected override void Initialize()
     {
-        _graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
-        _graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
-        //TODO ?? _graphics.SynchronizeWithVerticalRetrace = false;
+        _graphics.PreferredBackBufferWidth = Constants.Windows.SCREEN_WIDTH;
+        _graphics.PreferredBackBufferHeight = Constants.Windows.SCREEN_HEIGHT;
         IsFixedTimeStep = false;
         _graphics.ApplyChanges();
         base.Initialize();
