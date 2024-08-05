@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonogameAssault.Camera2d;
 using System;
 
 namespace MonogameAssault;
@@ -8,17 +9,14 @@ namespace MonogameAssault;
 public sealed class AssaultGame : Game
 {
     internal static SpriteBatch SpriteBatch; //only one to rule them all!
-    internal static Texture2D TextureAtlas;//TODO only one to rule them all, again!, move to resource handler?
-    internal static float FrameRate; //TODO move to better location
-    internal static Random Random = new();//TODO move to better location
-    internal static SpriteFont DebugFont;//TODO move to better location
+    internal static Texture2D TextureAtlas;
+    internal static float FrameRate;
+    internal static Random Random = new();
+    internal static SpriteFont DebugFont;
     private SceneManager _sceneManager;
     private readonly GraphicsDeviceManager _graphics;
-
     private Matrix _scaleResolutionMatrix;
     private Viewport _viewport;
-
-
 
     public AssaultGame()
     {
@@ -29,8 +27,8 @@ public sealed class AssaultGame : Game
 
     protected override void Initialize()
     {
-        _graphics.PreferredBackBufferWidth = GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH;
-        _graphics.PreferredBackBufferHeight = GameStatics.Windows.VIRTUAL_RESLUTION_HEIGHT;
+        _graphics.PreferredBackBufferWidth = GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH;
+        _graphics.PreferredBackBufferHeight = GameInfo.Windows.VIRTUAL_RESLUTION_HEIGHT;
         IsFixedTimeStep = false;
         _graphics.IsFullScreen = false;
         _graphics.ApplyChanges();
@@ -41,7 +39,7 @@ public sealed class AssaultGame : Game
             RecalculatedResolution();
         };
 
-        GameStatics.Windows.CameraMatrix = Matrix.CreateTranslation(Vector3.Zero);
+        CameraHelper.CameraMatrix = Matrix.Identity;
 
         RecalculatedResolution();
 
@@ -60,34 +58,15 @@ public sealed class AssaultGame : Game
     protected override void LoadContent()
     {
         SpriteBatch = new(GraphicsDevice);
-        _sceneManager = new(new SceneGame(), Content); //TODO : change to SceneMenu when implemented
+        _sceneManager = new(new SceneGame(), Content);
     }
 
     protected override void Update(GameTime gameTime)
     {
         FrameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (Keyboard.GetState().IsKeyDown(Keys.Escape)) //TODO refactor all input stuff to input manager
+        if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-
-        const float CAMERA_SPEED = 1f;
-
-        if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up))
-        {
-            GameStatics.Windows.CameraMatrix *= Matrix.CreateTranslation(0, CAMERA_SPEED, 0);
-        }
-        if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down))
-        {
-            GameStatics.Windows.CameraMatrix *= Matrix.CreateTranslation(0, -CAMERA_SPEED, 0);
-        }
-        if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
-        {
-            GameStatics.Windows.CameraMatrix *= Matrix.CreateTranslation(CAMERA_SPEED, 0, 0);
-        }
-        if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
-        {
-            GameStatics.Windows.CameraMatrix *= Matrix.CreateTranslation(-CAMERA_SPEED, 0, 0);
-        }
 
         _sceneManager.Update(gameTime);
 
@@ -101,7 +80,7 @@ public sealed class AssaultGame : Game
         GraphicsDevice.Viewport = _viewport;
 
         SpriteBatch.Begin(samplerState: SamplerState.PointClamp
-            , transformMatrix: GameStatics.Windows.CameraMatrix * _scaleResolutionMatrix);
+            , transformMatrix: CameraHelper.CameraMatrix * _scaleResolutionMatrix);
         _sceneManager.Draw(gameTime);
         SpriteBatch.End();
 
@@ -118,31 +97,31 @@ public sealed class AssaultGame : Game
         float screenWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
         float screenHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
 
-        if (screenWidth / GameStatics.Windows.DRAW_RESOLUTION_WIDTH > screenHeight / GameStatics.Windows.DRAW_RESOLUTION_HEIGHT)
+        if (screenWidth / GameInfo.Windows.DRAW_RESOLUTION_WIDTH > screenHeight / GameInfo.Windows.DRAW_RESOLUTION_HEIGHT)
         {
-            float aspectRatio = screenHeight / GameStatics.Windows.DRAW_RESOLUTION_HEIGHT;
-            GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH = (int)(aspectRatio * GameStatics.Windows.DRAW_RESOLUTION_WIDTH);
-            GameStatics.Windows.VIRTUAL_RESLUTION_HEIGHT = (int)(screenHeight);
+            float aspectRatio = screenHeight / GameInfo.Windows.DRAW_RESOLUTION_HEIGHT;
+            GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH = (int)(aspectRatio * GameInfo.Windows.DRAW_RESOLUTION_WIDTH);
+            GameInfo.Windows.VIRTUAL_RESLUTION_HEIGHT = (int)(screenHeight);
 
         }
         else
         {
-            float aspectRatio = screenWidth / GameStatics.Windows.DRAW_RESOLUTION_WIDTH;
-            GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH = (int)(screenWidth);
-            GameStatics.Windows.VIRTUAL_RESLUTION_HEIGHT = (int)(aspectRatio * GameStatics.Windows.DRAW_RESOLUTION_HEIGHT);
+            float aspectRatio = screenWidth / GameInfo.Windows.DRAW_RESOLUTION_WIDTH;
+            GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH = (int)(screenWidth);
+            GameInfo.Windows.VIRTUAL_RESLUTION_HEIGHT = (int)(aspectRatio * GameInfo.Windows.DRAW_RESOLUTION_HEIGHT);
 
         }
 
-        _scaleResolutionMatrix = Matrix.CreateScale(GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH / (float)GameStatics.Windows.DRAW_RESOLUTION_WIDTH);
+        _scaleResolutionMatrix = Matrix.CreateScale(GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH / (float)GameInfo.Windows.DRAW_RESOLUTION_WIDTH);
 
         _viewport = new Viewport
         {
-            X = (int)(screenWidth / 2 - GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH / 2),
-            Y = (int)(screenHeight / 2 - GameStatics.Windows.VIRTUAL_RESLUTION_HEIGHT / 2),
-            Width = GameStatics.Windows.VIRTUAL_RESOLUTION_WIDTH,
-            Height = GameStatics.Windows.VIRTUAL_RESLUTION_HEIGHT,
+            X = (int)(screenWidth / 2 - GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH / 2),
+            Y = (int)(screenHeight / 2 - GameInfo.Windows.VIRTUAL_RESLUTION_HEIGHT / 2),
+            Width = GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH,
+            Height = GameInfo.Windows.VIRTUAL_RESLUTION_HEIGHT,
             MinDepth = 0,
-            MaxDepth = 1,//TODO resarch more about this
+            MaxDepth = 1,//TODO resarch more depth about this
         };
     }
 

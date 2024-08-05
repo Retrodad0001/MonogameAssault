@@ -121,6 +121,9 @@ dotnet_diagnostic.IDE0051.severity = warning
 # IDE0059: Unnecessary assignment of a value
 dotnet_diagnostic.IDE0059.severity = warning
 
+# IDE0010: Add missing cases
+dotnet_diagnostic.IDE0010.severity = warning
+
 [*.vb]
 #### Naming styles ####
 
