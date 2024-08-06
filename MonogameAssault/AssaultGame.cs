@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonogameAssault.Camera2d;
-using System;
 
 namespace MonogameAssault;
 
@@ -28,14 +28,13 @@ public sealed class AssaultGame : Game
     protected override void Initialize()
     {
         _graphics.PreferredBackBufferWidth = GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH;
-        _graphics.PreferredBackBufferHeight = GameInfo.Windows.VIRTUAL_RESLUTION_HEIGHT;
+        _graphics.PreferredBackBufferHeight = GameInfo.Windows.VIRTUAL_RESOLUTION_HEIGHT;
         IsFixedTimeStep = false;
         _graphics.IsFullScreen = false;
         _graphics.ApplyChanges();
         IsMouseVisible = true;
         Window.AllowUserResizing = true;
-        Window.ClientSizeChanged += (sender, args) =>
-        {
+        Window.ClientSizeChanged += (sender, args) => {
             RecalculatedResolution();
         };
 
@@ -48,8 +47,7 @@ public sealed class AssaultGame : Game
 
     protected override void Dispose(bool disposing)
     {
-        Window.ClientSizeChanged -= (sender, args) =>
-        {
+        Window.ClientSizeChanged -= (sender, args) => {
             RecalculatedResolution();
         };
         base.Dispose(disposing);
@@ -101,27 +99,26 @@ public sealed class AssaultGame : Game
         {
             float aspectRatio = screenHeight / GameInfo.Windows.DRAW_RESOLUTION_HEIGHT;
             GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH = (int)(aspectRatio * GameInfo.Windows.DRAW_RESOLUTION_WIDTH);
-            GameInfo.Windows.VIRTUAL_RESLUTION_HEIGHT = (int)(screenHeight);
+            GameInfo.Windows.VIRTUAL_RESOLUTION_HEIGHT = (int)(screenHeight);
 
         }
         else
         {
             float aspectRatio = screenWidth / GameInfo.Windows.DRAW_RESOLUTION_WIDTH;
             GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH = (int)(screenWidth);
-            GameInfo.Windows.VIRTUAL_RESLUTION_HEIGHT = (int)(aspectRatio * GameInfo.Windows.DRAW_RESOLUTION_HEIGHT);
+            GameInfo.Windows.VIRTUAL_RESOLUTION_HEIGHT = (int)(aspectRatio * GameInfo.Windows.DRAW_RESOLUTION_HEIGHT);
 
         }
 
         _scaleResolutionMatrix = Matrix.CreateScale(GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH / (float)GameInfo.Windows.DRAW_RESOLUTION_WIDTH);
 
-        _viewport = new Viewport
-        {
+        _viewport = new Viewport {
             X = (int)(screenWidth / 2 - GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH / 2),
-            Y = (int)(screenHeight / 2 - GameInfo.Windows.VIRTUAL_RESLUTION_HEIGHT / 2),
+            Y = (int)(screenHeight / 2 - GameInfo.Windows.VIRTUAL_RESOLUTION_HEIGHT / 2),
             Width = GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH,
-            Height = GameInfo.Windows.VIRTUAL_RESLUTION_HEIGHT,
+            Height = GameInfo.Windows.VIRTUAL_RESOLUTION_HEIGHT,
             MinDepth = 0,
-            MaxDepth = 1,//TODO resarch more depth about this
+            MaxDepth = 1,//TODO research more depth about this
         };
     }
 

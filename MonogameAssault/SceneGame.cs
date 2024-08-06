@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonogameAssault.AssetManagement;
 using MonogameAssault.Camera2d;
 using MonogameAssault.CoreComponents;
-using System;
 
 namespace MonogameAssault;
 
@@ -64,11 +64,11 @@ internal sealed class SceneGame : SceneBase
             switch (actorKind)
             {
                 case ActorKind.EnemyWasp:
-                sourceRectangle = TextureAtlasHelper.Enemies.SourceRectangleWasp1;
-                break;
+                    sourceRectangle = TextureAtlasHelper.Enemies.SourceRectangleWasp1;
+                    break;
                 default:
 
-                break;
+                    break;
             }
 
             AssaultGame.SpriteBatch.Draw(texture: AssaultGame.TextureAtlas,

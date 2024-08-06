@@ -2,14 +2,14 @@
 
 This is a demo game for learning Monogame and combining object-oriented design and data-oriented design. I also want to see how far I can come with maintainable automatic testing. Please give feedback so the community can use it.
 
-The game involves many units on the screen, with enough CPU-bound pressure, so parallelisation is needed. This is not a massive project, but I will assume that the game should be supported for a long time and is huge, so it should be automatically testable and have "good enough" maintainability
+The game involves many units on the screen, with enough CPU-bound pressure, so parallelization is needed. This is not a massive project, but I will assume that the game should be supported for a long time and is huge, so it should be automatically testable and have "good enough" maintainability
 
 # Resources used
 
 ## Math
 
 Freya
-Math for Game Devs [2022, part 1] • Numbers, Vectors & Dot Product https://www.youtube.com/watch?v=fjOdtSu4Lm4
+Math for Game Development [2022, part 1] • Numbers, Vectors & Dot Product https://www.youtube.com/watch?v=fjOdtSu4Lm4
 
 This is just the first of many videos.
 
@@ -27,7 +27,7 @@ A Complete .NET Developer's Guide to Span with Stephen Toub https://www.youtube.
 
 ## polish
 
-Jan Willem Nijman - Vlambeer - "The art of screenshake" at INDIGO Classes 2013 https://www.youtube.com/watch?v=AJdEqssNZ-U
+Jan Willem Nijman - Vlambeer - "The art of screen shake" at INDIGO Classes 2013 https://www.youtube.com/watch?v=AJdEqssNZ-U
 
 ## General Tips / Examples
 

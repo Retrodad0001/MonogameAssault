@@ -21,6 +21,6 @@ internal static class GameInfo
         /// <summary>
         /// The resolution the game renders at Height (window)
         /// </summary>
-        internal static int VIRTUAL_RESLUTION_HEIGHT = 1080;
+        internal static int VIRTUAL_RESOLUTION_HEIGHT = 1080;
     }
 }

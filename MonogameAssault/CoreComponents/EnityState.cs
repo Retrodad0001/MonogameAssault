@@ -2,7 +2,7 @@
 
 namespace MonogameAssault.Components;
 [Flags]
-internal enum EnityState
+internal enum EntityState
 {
     NoneActive = 0,
     Active = 1,

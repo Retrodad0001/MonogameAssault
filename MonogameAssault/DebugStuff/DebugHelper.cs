@@ -8,17 +8,17 @@ internal static class DebugHelper
         switch (logLevel)
         {
             case LogLevel.Info:
-            Console.WriteLine($"INFO: {message}");
-            break;
+                Console.WriteLine($"INFO: {message}");
+                break;
             case LogLevel.Warning:
-            Console.WriteLine($"WARNING: {message}");
-            break;
+                Console.WriteLine($"WARNING: {message}");
+                break;
             case LogLevel.Error:
-            Console.WriteLine($"ERROR: {message}");
-            break;
+                Console.WriteLine($"ERROR: {message}");
+                break;
             default:
-            Console.WriteLine($"loglevel is unknown: {message}");
-            break;
+                Console.WriteLine($"loglevel is unknown: {message}");
+                break;
         }
     }
 }

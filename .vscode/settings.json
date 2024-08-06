@@ -1,0 +1,20 @@
+{
+    "cSpell.words": [
+        "Aristurtle",
+        "Collidable",
+        "gamedev",
+        "Hanselman",
+        "mgcb",
+        "Monogame",
+        "mscorlib",
+        "Nijman",
+        "shemas",
+        "Toub",
+        "Vlambeer",
+        "Willem"
+    ],
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.defaultFormatter": "icrawl.discord-vscode",
+    "notebook.defaultFormatter": null
+}
