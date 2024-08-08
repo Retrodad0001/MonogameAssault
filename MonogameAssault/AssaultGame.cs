@@ -22,7 +22,6 @@ public sealed class AssaultGame : Game
     {
         _graphics = new(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
     }
 
     protected override void Initialize()
@@ -31,12 +30,14 @@ public sealed class AssaultGame : Game
         _graphics.PreferredBackBufferHeight = GameInfo.Windows.VIRTUAL_RESOLUTION_HEIGHT;
         IsFixedTimeStep = false;
         _graphics.IsFullScreen = false;
-        _graphics.ApplyChanges();
+
         IsMouseVisible = true;
         Window.AllowUserResizing = true;
         Window.ClientSizeChanged += (sender, args) => {
             RecalculatedResolution();
         };
+
+        _graphics.ApplyChanges();
 
         CameraHelper.CameraMatrix = Matrix.Identity;
 
@@ -71,25 +72,27 @@ public sealed class AssaultGame : Game
         base.Update(gameTime);
     }
 
-
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
         GraphicsDevice.Viewport = _viewport;
 
         SpriteBatch.Begin(samplerState: SamplerState.PointClamp
-            , transformMatrix: CameraHelper.CameraMatrix * _scaleResolutionMatrix);
+            , transformMatrix: CameraHelper.CameraMatrix * _scaleResolutionMatrix
+            );
         _sceneManager.Draw(gameTime);
         SpriteBatch.End();
 
         base.Draw(gameTime);
+
+
     }
 
     private void RecalculatedResolution()
     {
         /* Aristurtle Dev channel:
-         * Scale Matrix Independent Resolution Rendering in MonoGame #monogame #gamedev : 
-         * https://www.youtube.com/watch?v=BVSSQKlYipo 
+         * Scale Matrix Independent Resolution Rendering in MonoGame #monogame #gamedev :
+         * https://www.youtube.com/watch?v=BVSSQKlYipo
          * */
 
         float screenWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;

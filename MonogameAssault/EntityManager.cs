@@ -9,39 +9,49 @@ internal sealed class EntityManager
 {
     internal const uint ENEMY_COUNT = 150000;
     internal EntityState[] entityStates;
+    internal Partition[] partitions;
     internal ActorKind[] actorKinds;
     internal Capability[] capabilities;
-    internal Vector2[] CurrentPositions;
+    internal Vector2[] positions;
 
     //TODO add some spatial partitioning data structure and only update Collidable entities in same partition
 
     public EntityManager()
     {
         entityStates = new EntityState[ENEMY_COUNT];
+        partitions = new Partition[ENEMY_COUNT];
         actorKinds = new ActorKind[ENEMY_COUNT];
         capabilities = new Capability[ENEMY_COUNT];
-        CurrentPositions = new Vector2[ENEMY_COUNT];
+        positions = new Vector2[ENEMY_COUNT];
 
         for (uint i = 0; i < ENEMY_COUNT; i++)
         {
-            int x = AssaultGame.Random.Next(0, GameInfo.Windows.VIRTUAL_RESOLUTION_WIDTH);
-            int y = AssaultGame.Random.Next(0, GameInfo.Windows.VIRTUAL_RESOLUTION_HEIGHT);
+            int x = AssaultGame.Random.Next(0, (int)GameInfo.Windows.MAX_PARTITIONS_IN_PIXELS_WH);
+            int y = AssaultGame.Random.Next(0, (int)GameInfo.Windows.MAX_PARTITIONS_IN_PIXELS_WH);
 
             entityStates[i] = EntityState.Active;
             actorKinds[i] = ActorKind.EnemyWasp;
             capabilities[i] = Capability.CanMove;
+            positions[i] = new Vector2(x, y);
 
-            CurrentPositions[i] = new Vector2(x, y);
+            //Calculate initial partition for each entity
+            Vector2 entityPosition = positions[i];
+            Partition partition = new(0, 0);
+            partition = Partition.CalculatePartition(ref partition
+                , ref entityPosition
+                , GameInfo.Windows.PARTITION_WH);
+            partitions[i] = partition;
         }
     }
 
     public void Update(GameTime gameTime)
     {
         float elapsedGameTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        Span<EntityState> entityStates = new Span<EntityState>(this.entityStates);
-        Span<ActorKind> actorKinds = new Span<ActorKind>(this.actorKinds);
-        Span<Capability> capabilities = new Span<Capability>(this.capabilities);
-        Span<Vector2> CurrentPositions = new Span<Vector2>(this.CurrentPositions);
+        Span<EntityState> entityStates = new(this.entityStates);
+        _ = new Span<ActorKind>(this.actorKinds);
+        Span<Capability> capabilities = new(this.capabilities);
+        Span<Vector2> CurrentPositions = new(this.positions);
+
 
         UpdatePositions(entityStatesSpan: entityStates
         , capabilitiesSpan: capabilities

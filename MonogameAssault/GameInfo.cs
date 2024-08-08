@@ -22,5 +22,11 @@ internal static class GameInfo
         /// The resolution the game renders at Height (window)
         /// </summary>
         internal static int VIRTUAL_RESOLUTION_HEIGHT = 1080;
+
+        internal const uint PARTITION_WH = 100;
+
+        internal const uint MAX_NUMERS_OF_PARTITIONS_WH = 10;
+
+        internal const uint MAX_PARTITIONS_IN_PIXELS_WH = MAX_NUMERS_OF_PARTITIONS_WH * PARTITION_WH;
     }
 }

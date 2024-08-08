@@ -7,6 +7,6 @@ internal static class TextureAtlasHelper
 {
     internal static class Enemies
     {
-        internal static Rectangle SourceRectangleWasp1 = new Rectangle(163, 483, 125, 16);
+        internal static Rectangle SourceRectangleWasp1 = new(163, 483, 125, 16);
     }
 }

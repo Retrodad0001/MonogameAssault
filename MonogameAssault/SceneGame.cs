@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using MonogameAssault.AssetManagement;
 using MonogameAssault.Camera2d;
 using MonogameAssault.CoreComponents;
+using MonogameAssault.DebugStuff;
 
 namespace MonogameAssault;
 
@@ -55,7 +56,7 @@ internal sealed class SceneGame : SceneBase
     internal override void Draw(GameTime gameTime)
     {
         //TODO draw only visible entities based on camera
-        ReadOnlySpan<Vector2> positionsSpan = new(_entityManager.CurrentPositions);
+        ReadOnlySpan<Vector2> positionsSpan = new(_entityManager.positions);
         for (int i = 0; i < EntityManager.ENEMY_COUNT; i++)
         {
             var position = positionsSpan[i];
@@ -67,7 +68,7 @@ internal sealed class SceneGame : SceneBase
                     sourceRectangle = TextureAtlasHelper.Enemies.SourceRectangleWasp1;
                     break;
                 default:
-
+                    DebugStuff.DebugHelper.Log(LogLevel.Error, $"ActorKind {actorKind} not implemented in SceneGame.Draw");
                     break;
             }
 

@@ -3,7 +3,7 @@
 namespace MonogameAssault.CoreComponents;
 
 [Flags]
-internal enum ActorKind
+public enum ActorKind
 {
     EnemyWasp = 1,
 }
